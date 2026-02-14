@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Yumaili 💖 Infinito</title>
+
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    background: radial-gradient(circle at center, #14001f, #000000);
+    font-family: Arial, sans-serif;
+    color:#ffffff;
+    text-align:center;
+}
+
+/* Nombre */
+.nombre{
+    position:absolute;
+    top:20%;
+    width:100%;
+    font-size:70px;
+    font-weight:bold;
+    background: linear-gradient(90deg,#ff0203,#ff4d6d,#ffffff,#ff99cc);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:0 0 40px #ff4d6d;
+}
+
+/* Corazón */
+.corazon{
+    position:absolute;
+    top:45%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:90px;
+    animation:latido 1s infinite;
+    color:#ff0203;
+}
+@keyframes latido{
+    0%{transform:translate(-50%,-50%) scale(1);}
+    50%{transform:translate(-50%,-50%) scale(1.3);}
+    100%{transform:translate(-50%,-50%) scale(1);}
+}
+
+/* Anillos */
+.anillo{
+    position:absolute;
+    top:45%;
+    left:50%;
+    width:500px;
+    height:200px;
+    border:2px solid #ff4d6d;
+    border-radius:50%;
+    transform:translate(-50%,-50%) rotateX(70deg);
+    animation:girar 20s linear infinite;
+}
+@keyframes girar{
+    from{transform:translate(-50%,-50%) rotateX(70deg) rotateZ(0deg);}
+    to{transform:translate(-50%,-50%) rotateX(70deg) rotateZ(360deg);}
+}
+
+/* Palabras orbitando */
+.palabra{
+    position:absolute;
+    color:#ffffff;
+    font-size:18px;
+    text-shadow:0 0 15px #ff0203;
+}
+
+/* Cuenta regresiva */
+.cuenta{
+    position:absolute;
+    bottom:10%;
+    width:100%;
+    font-size:25px;
+    color:#ff99cc;
+    text-shadow:0 0 20px #ff0203;
+}
+</style>
+</head>
+
+<body>
+
+<div class="nombre">YUMAILI 💖</div>
+<div class="corazon">💘</div>
+<div class="anillo" id="anillo"></div>
+<div class="cuenta" id="cuenta"></div>
+
+<!-- Música romántica suave -->
+<audio id="musica" autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio.
+</audio>
+
+<script>
+
+/* Ajustar volumen */
+const musica = document.getElementById("musica");
+musica.volume = 0.2;  // 20% de volumen suave
+
+/* Cuenta regresiva */
+const fechaEspecial = new Date("2026-12-31T00:00:00"); // CAMBIA ESTA FECHA SI QUIERES
+
+function actualizarCuenta(){
+    const ahora = new Date();
+    const diferencia = fechaEspecial - ahora;
+
+    if(diferencia <= 0){
+        document.getElementById("cuenta").innerHTML="💖 Ya llegó nuestro momento infinito 💖";
+        return;
+    }
+
+    const dias = Math.floor(diferencia/(1000*60*60*24));
+    const horas = Math.floor((diferencia/(1000*60*60))%24);
+    const minutos = Math.floor((diferencia/(1000*60))%60);
+    const segundos = Math.floor((diferencia/1000)%60);
+
+    document.getElementById("cuenta").innerHTML=
+    `Faltan ${dias} días ${horas}h ${minutos}m ${segundos}s para nuestro momento especial 💞`;
+}
+
+setInterval(actualizarCuenta,1000);
+
+/* Palabras sobre el anillo */
+const palabras=["Te Amo","Amor","Todo de Ti","Eres lo Máximo","Mi Vida","Siempre Tú"];
+const anillo=document.getElementById("anillo");
+
+palabras.forEach((texto,i)=>{
+    let span=document.createElement("div");
+    span.className="palabra";
+    span.innerHTML=texto;
+
+    let angulo=(360/palabras.length)*i;
+    let radio=250;
+
+    span.style.left=(Math.cos(angulo*Math.PI/180)*radio)+"px";
+    span.style.top=(Math.sin(angulo*Math.PI/180)*100)+"px";
+
+    anillo.appendChild(span);
+});
+</script>
+
+</body>
+</html>
